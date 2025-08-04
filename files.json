@@ -1,0 +1,1 @@
+[{"dut_file": "hello_world/usb/hello_usb.elf", "buddy_file": "hello_world/usb/hello_usb.elf", "success_strings": ["string1", "string2"], "test_name": "TEST1"}, {"dut_file": "blink/blink.elf", "buddy_file": "blink/blink.elf", "success_strings": ["string1", "string2"], "test_name": "TEST2"}]
