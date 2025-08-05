@@ -13,22 +13,21 @@ tries = 10
 # Unused currently, but might be useful
 parser = argparse.ArgumentParser(
                     prog='auto-test',
-                    description='run given programme on selected target',
-                    epilog='Text at the bottom of help')
+                    description='run tests from json',)
 
-parser.add_argument('--file')
-parser.add_argument('--target')
+parser.add_argument('--dut')
+parser.add_argument('--buddy')
 
 args = parser.parse_args()
-print('Arguments:', args.file, args.target)
+print('Arguments:', args.dut, args.buddy)
 
 path_list = [{'dut_file': 'hello_world/serial/hello_serial.elf',
                 'buddy_file': 'NULL',
-                'success_string': 'Hello, world!',
-                'test_name': 'hello_serial on dut and buddy'},
+                'success_string': 'Hello, world!\r\n',
+                'test_name': 'hello_serial'},
             {'dut_file': 'blink/blink.elf',
                 'buddy_file': 'NULL',
-                'success_string': ['string1', 'string2'],
+                'success_string': '',
                 'test_name': 'Blink test'}           
             ]
 
@@ -71,23 +70,28 @@ def main():
             '''
 
         # Now wait for either timeout or success
-        check_for_string(tries, '/dev/ttyACM1')
+        check_for_string(tries, f'/dev/{args.dut}', element)
 
 
 # Function reads UART and checks for specified success string
-def check_for_string(attempt_limit, port):
+def check_for_string(attempt_limit, port, element):
     line = b''
     attempts = 0
 
-    expected = bytes(f"{element['success_string']}\r\n", 'utf-8')
-
-    while line != expected and attempts < attempt_limit:
+    expected = bytes(element['success_string'], 'utf-8')
+    print("expected:", expected)
+    while True:
         with serial.Serial(port, 115200, timeout=1) as ser:
             line = ser.readline()
             print('ACM1', line)
             attempts += 1
-
             sleep(1)
+        if line == expected:
+            print("Success!")
+            break
+        elif attempts == attempt_limit:
+            print("Attempt limit reached")
+            break
 
 # Function for setting target device (either dut or buddy)
 def set_target(target):
