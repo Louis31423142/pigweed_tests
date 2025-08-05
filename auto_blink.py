@@ -25,11 +25,26 @@ path_list = [{'dut_file': 'hello_world/serial/hello_serial.elf',
                 'buddy_file': 'NULL',
                 'success_string': 'Hello, world!\r\n',
                 'test_name': 'hello_serial'},
+            {'dut_file': 'i2c/mpu6050_i2c/mpu6050_i2c.elf',
+                'buddy_file': 'i2c/i2c.elf',
+                'success_string': 'beepboop',
+                'test_name': 'MPU6050 test WITH i2c EMULATOR'}, 
+            {'dut_file': 'i2c/mpu6050_i2c/mpu6050_i2c.elf',
+                'buddy_file': 'NULL',
+                'success_string': 'beepboop',
+                'test_name': 'MPU6050 test'}, 
             {'dut_file': 'blink/blink.elf',
                 'buddy_file': 'NULL',
                 'success_string': '',
-                'test_name': 'Blink test'}           
-            ]
+                'test_name': 'Blink test'}, 
+            {'dut_file': 'pio/uart_tx.elf',
+                'buddy_file': 'NULL',
+                'success_string': 'Hello GPIO IRQ\n',
+                'test_name': 'pio uart tx test'},
+            {'dut_file': 'gpio/hello_gpio_irq/hello_gpio_irq.elf',
+                'buddy_file': 'NULL',
+                'success_string': 'Hello GPIO IRQ\n',
+                'test_name': 'Hello gpio test'}]
 
 json_path_list = json.dumps(path_list)
 
@@ -55,36 +70,37 @@ def main():
 
         # Flash elf onto DUT
         result = subprocess.run(f'~/pico/openocd/src/openocd -s ~/pico/openocd/tcl -f interface/cmsis-dap.cfg -f target/rp2350.cfg -c "adapter speed 5000; program /home/louis/pico/pico_examples/build/{element["dut_file"]} verify reset exit"', capture_output = True, text = True, shell = True)
-        '''
+
         print(result.stdout)
         print(result.stderr)
-        '''
 
         # If there is a buddy file specified (e.g an i2c emulator), switch target and flash the elf
         if element["buddy_file"] != 'NULL':
             set_target('buddy')
-            result = subprocess.run(f'~/pico/openocd/src/openocd -s ~/pico/openocd/tcl -f interface/cmsis-dap.cfg -f target/rp2350.cfg -c "adapter speed 5000; program /home/louis/pico/pico_examples/build/{element["buddy_file"]} verify reset exit"', capture_output = True, text = True, shell = True)
-            '''
+            result = subprocess.run(f'~/pico/openocd/src/openocd -s ~/pico/openocd/tcl -f interface/cmsis-dap.cfg -f target/rp2350.cfg -c "adapter speed 5000; program /home/louis/auto-tests/emulators/build/{element["buddy_file"]} verify reset exit"', capture_output = True, text = True, shell = True)
+
             print(result.stdout)
             print(result.stderr)
-            '''
 
         # Now wait for either timeout or success
-        check_for_string(tries, f'/dev/{args.dut}', element)
-
+        check_for_string(tries, f'/dev/{args.dut}', f'/dev/{args.buddy}', element)
 
 # Function reads UART and checks for specified success string
-def check_for_string(attempt_limit, port, element):
+def check_for_string(attempt_limit, port1, port2, element):
     line = b''
     attempts = 0
 
     expected = bytes(element['success_string'], 'utf-8')
     print("expected:", expected)
     while True:
-        with serial.Serial(port, 115200, timeout=1) as ser:
+        with serial.Serial(port1, 115200, timeout=1) as ser:
             line = ser.readline()
             print('ACM1', line)
             attempts += 1
+            sleep(1)
+        with serial.Serial(port2, 115200, timeout=1) as ser:
+            line2 = ser.readline()
+            print('ACM2', line2)
             sleep(1)
         if line == expected:
             print("Success!")
@@ -97,6 +113,5 @@ def check_for_string(attempt_limit, port, element):
 def set_target(target):
     target_result = subprocess.run(["cargo", "run", "target", target], cwd = "/home/louis/testing/testctl", capture_output = True, text = True)
     print(target_result.stdout)
-
 
 main()
