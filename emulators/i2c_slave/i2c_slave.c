@@ -5,17 +5,11 @@
 #include <string.h>
 #include "hardware/uart.h"
 
-static const uint I2C_SLAVE_ADDRESS = 0x68;
+static const uint I2C_SLAVE_ADDRESS = 0x17;
 static const uint I2C_BAUDRATE = 100000; // 100 kHz
 
 static const uint I2C_SLAVE_SDA_PIN = 2;
 static const uint I2C_SLAVE_SCL_PIN = 3;
-
-#define UART_TX_PIN 16
-#define UART_RX_PIN 17
-
-#define UART_ID uart0
-#define BAUD_RATE 115200
 
 
 // The slave implements a 256 byte memory. To write a series of bytes, the master first
@@ -71,25 +65,23 @@ static void setup_slave() {
     i2c_slave_init(i2c0, I2C_SLAVE_ADDRESS, &i2c_slave_handler);
 }
 
+static void run_slave() {
+ uint64_t waitTime;
+ while(true) {
+    for(uint8_t x = 0;x < 256;x++) {
+      waitTime = time_us_64() + 250000; // 4 times per second
+      context.mem[0] = x;
+      //printf("slave is waiting.\n");
+      while (time_us_64() < waitTime) {}
+    }
+  }
+}
+
 int main() {
     stdio_init_all();
-    gpio_init(26);
-    gpio_set_dir(26, GPIO_OUT);
-
-    // setup UART
-    uart_init(UART_ID, BAUD_RATE);
-
-    gpio_set_function(UART_TX_PIN, UART_FUNCSEL_NUM(UART_ID, UART_TX_PIN));
-    gpio_set_function(UART_RX_PIN, UART_FUNCSEL_NUM(UART_ID, UART_RX_PIN));
 
     // setup i2c slave
     setup_slave();
+    run_slave();
 
-    while (true) {
-        uart_puts(UART_ID, " Hello, UART!\n");
-        gpio_put(26, 1);
-        sleep_ms(1000);
-        gpio_put(26, 0);
-        sleep_ms(1000);
-    }
 }
