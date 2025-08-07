@@ -17,89 +17,38 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('--dut')
 parser.add_argument('--buddy')
+parser.add_argument('--root')
 
 args = parser.parse_args()
 print('Arguments:', args.dut, args.buddy)
 
 captured_msgs = []
 
-'''
-path_list = [{'dut_file': 'hello_world/serial/hello_serial.elf',
-                'buddy_file': 'NULL',
-                'success_string': 'Hello, world!\r\n',
-                'test_name': 'HELLO WORLD TEST'}, 
-            {'dut_file': 'clocks/detached_clk_peri/clocks_detached_clk_peri.elf',
-                'buddy_file': 'NULL',
-                'success_string': 'Measuring system clock with frequency counter:13300 kHz\r\n',
-                'test_name': 'CLOCK TEST'}, 
-            {'dut_file': 'blink/blink.elf',
-                'buddy_file': 'NULL',
-                'success_string': '',
-                'test_name': 'Blink test'}, 
-            {'dut_file': 'pio/uart_tx.elf',
-                'buddy_file': 'NULL',
-                'success_string': 'Hello GPIO IRQ\n',
-                'test_name': 'pio uart tx test'},
-            {'dut_file': 'gpio/hello_gpio_irq/hello_gpio_irq.elf',
-                'buddy_file': 'NULL',
-                'success_string': 'Hello GPIO IRQ\n',
-                'test_name': 'Hello gpio test'}]
-
-json_path_list = json.dumps(path_list)
-
-# Load files into json
-with open("files.json", "w") as file:
-    file.write(json_path_list)
-
-# Read files for testing from files.json
-with open("files.json", "r") as file:
-    data = json.load(file)
-
-for element in data:
-    print(element["dut_file"])
-
-'''
 # For each dictionary in data, load the appropriate elfs onto dut and buddy
 def main():
     global captured_msgs
 
-    # Get a list of all examples
-    examples_path = os.path.expanduser("~/pico/clean-examples/dut_build")
-    file_path_list = []
-    dir_path_list = [examples_path]
+    # If the user passed a root directory to expand into files, create the json based on this
+    if args.root != None:
+        load_json(args.root)
+    
+    # Read files for testing from files.json
+    with open("files.json", "r") as file:
+        test_data = json.load(file)
 
-    for i in range(3):
-        changes = 0
-        temp_list_2 = []
-        for dir in dir_path_list:
-            try:
-                temp_list = os.listdir(dir)
-                for item in temp_list:
-                    temp_list_2.append(f"{dir}/{item}")
-                changes += 1
-            except:
-                print("Not a directory!")
-
-        for item in temp_list_2:
-            dir_path_list.append(item)
-            if item.endswith(".elf"):
-                file_path_list.append(item)
-
-        if changes == 0:
-            break
-
-    #print(file_path_list)
-    data = []
-    n = 0
-    for path in file_path_list:
-        n += 1
-        data.append({"dut_file": path, "buddy_file": "NULL", "success_string": "Hello, world!\r\n", "test_name": f"TEST {n}"})
-
-
-    for element in data:
+    for element in test_data:
         # Announce test name
         print('-----', element["test_name"], '-----')
         print(element["dut_file"])
+
+        # If there is a buddy file specified (e.g an i2c emulator), switch target and flash the elf
+        if element["buddy_file"] != 'NULL':
+            set_target('buddy')
+            result = subprocess.run(f'~/pico/openocd/src/openocd -s ~/pico/openocd/tcl -f interface/cmsis-dap.cfg -f target/rp2350.cfg -c "adapter speed 5000; program /home/louis/auto-tests/emulators/build/{element["buddy_file"]} verify reset exit"', capture_output = True, text = True, shell = True)
+
+            #print(result.stdout)
+            #print(result.stderr)
+
 
         # Set target to dut
         set_target('dut')
@@ -107,20 +56,12 @@ def main():
         # Flash elf onto DUT
         result = subprocess.run(f'~/pico/openocd/src/openocd -s ~/pico/openocd/tcl -f interface/cmsis-dap.cfg -f target/rp2350.cfg -c "adapter speed 5000; program {element["dut_file"]} verify reset exit"', capture_output = True, text = True, shell = True)
 
-        print(result.stdout)
-        print(result.stderr)
-
-        # If there is a buddy file specified (e.g an i2c emulator), switch target and flash the elf
-        if element["buddy_file"] != 'NULL':
-            set_target('buddy')
-            result = subprocess.run(f'~/pico/openocd/src/openocd -s ~/pico/openocd/tcl -f interface/cmsis-dap.cfg -f target/rp2350.cfg -c "adapter speed 5000; program /home/louis/pico/clean-examples/buddy_build{element["buddy_file"]} verify reset exit"', capture_output = True, text = True, shell = True)
-
-            #print(result.stdout)
-            #print(result.stderr)
+        #print(result.stdout)
+        #print(result.stderr)
 
         # Allow timeout seconds for test files to run before checking for success strings
         sleep(timeout)
-        print(captured_msgs)
+        #print(captured_msgs)
 
         if check_for_string(captured_msgs, element):
             print("TEST SUCCESFUL")
@@ -134,8 +75,13 @@ def main():
 # Function reads list and checks for specified success string
 # Returns true if success string in list, else false
 def check_for_string(msg_list, element):
+    #Some tests dont have any prints so just return true
+    if len(msg_list) == 0 and element["success_string"] == 'None':
+        return True
+    
     for item in msg_list:
-        if item == bytes(element['success_string'], 'utf-8'):
+        if bytes(element['success_string'], 'utf-8') in item:
+            print(f"Found success string {item} in msg_list")
             return True
     return False 
 
@@ -143,6 +89,40 @@ def check_for_string(msg_list, element):
 def set_target(target):
     target_result = subprocess.run(["cargo", "run", "target", target], cwd = "/home/louis/testing/testctl", capture_output = True, text = True)
     print(target_result.stdout)
+
+# Function for loading json with pico examples .elf files
+def load_json(root):
+    #expand root to full path
+    path = os.path.expanduser(f"{root}")
+
+    file_path_list = []
+    dir_path_list = [path]
+
+    for _ in range(3):
+        temp_list_2 = []
+        for dir in dir_path_list:
+            try:
+                temp_list = os.listdir(dir)
+                for item in temp_list:
+                    temp_list_2.append(f"{dir}/{item}")
+            except:
+                pass
+
+        for item in temp_list_2:
+            if item not in dir_path_list:
+                dir_path_list.append(item)
+                if item.endswith(".elf"):
+                    file_path_list.append(item)
+
+    data = []
+    for path in file_path_list:
+        data.append({"dut_file": path, "buddy_file": "NULL", "success_string": "Hello, world!\r\n", "test_name": "TEST"})
+    
+    json_data = json.dumps(data, indent=4)
+
+    # Load files into json
+    with open("new_files.json", "w") as file:
+        file.write(json_data)
 
 # Serial port reading 
 dut_port = serial.Serial(port = f"/dev/{args.dut}", baudrate = 115200)
