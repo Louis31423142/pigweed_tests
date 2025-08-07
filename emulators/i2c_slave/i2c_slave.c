@@ -1,87 +1,122 @@
-#include <hardware/i2c.h>
-#include <pico/i2c_slave.h>
-#include <pico/stdlib.h>
+/**
+ * Example program for basic use of pico as an I2C peripheral (previously known as I2C slave)
+ * 
+ * This example allows the pico to act as a 256byte RAM
+ * 
+ * Author: Graham Smith (graham@smithg.co.uk)
+ */
+
+
+// Usage:
+//
+// When writing data to the pico the first data byte updates the current address to be used when writing or reading from the RAM
+// Subsequent data bytes contain data that is written to the ram at the current address and following locations (current address auto increments)
+//
+// When reading data from the pico the first data byte returned will be from the ram storage located at current address
+// Subsequent bytes will be returned from the following ram locations (again current address auto increments)
+//
+// N.B. if the current address reaches 255, it will autoincrement to 0 after next read / write
+
+
+#include "pico/stdlib.h"
+#include "hardware/i2c.h"
+#include "hardware/irq.h"
 #include <stdio.h>
-#include <string.h>
-#include "hardware/uart.h"
 
-static const uint I2C_SLAVE_ADDRESS = 0x17;
-static const uint I2C_BAUDRATE = 100000; // 100 kHz
+#define ACC_VALUE 50
+#define GYRO_VALUE 50
 
-static const uint I2C_SLAVE_SDA_PIN = 2;
-static const uint I2C_SLAVE_SCL_PIN = 3;
+// define I2C addresses to be used for this peripheral
+#define ADDR 0x68
+
+// ram_addr is the current address to be used when writing / reading the RAM
+// N.B. the address auto increments, as stored in 8 bit value it automatically rolls round when reaches 255
+uint8_t ram_addr = 0;
+
+// ram is the storage for the RAM data
+uint8_t ram[128] = {0};
 
 
-// The slave implements a 256 byte memory. To write a series of bytes, the master first
-// writes the memory address, followed by the data. The address is automatically incremented
-// for each byte transferred, looping back to 0 upon reaching the end. Reading is done
-// sequentially from the current memory address.
-static struct
-{
-    uint8_t mem[256];
-    uint8_t mem_address;
-    bool mem_address_written;
-} context;
+// Interrupt handler implements the RAM
+void i2c0_irq_handler() {
 
-// Our handler is called from the I2C ISR, so it must complete quickly. Blocking calls /
-// printing to stdio may interfere with interrupt handling.
-static void i2c_slave_handler(i2c_inst_t *i2c, i2c_slave_event_t event) {
-    switch (event) {
-    case I2C_SLAVE_RECEIVE: // master has written some data
-        if (!context.mem_address_written) {
-            // writes always start with the memory address
-            context.mem_address = i2c_read_byte_raw(i2c);
-            context.mem_address_written = true;
+    // Get interrupt status
+    uint32_t status = i2c1->hw->intr_stat;
+
+    // Check to see if we have received data from the I2C controller
+    if (status & I2C_IC_INTR_STAT_R_RX_FULL_BITS) {
+
+        // Read the data (this will clear the interrupt)
+        uint32_t value = i2c1->hw->data_cmd;
+
+        // Check if this is the 1st byte we have received
+        if (value & I2C_IC_DATA_CMD_FIRST_DATA_BYTE_BITS) {
+
+            // If so treat it as the address to use
+            ram_addr = (uint8_t)(value & I2C_IC_DATA_CMD_DAT_BITS);
+
         } else {
-            // save into memory
-            context.mem[context.mem_address] = i2c_read_byte_raw(i2c);
-            context.mem_address++;
+            // If not 1st byte then store the data in the RAM
+            // and increment the address to point to next byte
+            ram[ram_addr] = (uint8_t)(value & I2C_IC_DATA_CMD_DAT_BITS);
+            ram_addr++;
         }
-        break;
-    case I2C_SLAVE_REQUEST: // master is requesting data
-        // load from memory
-        i2c_write_byte_raw(i2c, context.mem[context.mem_address]);
-        context.mem_address++;
-        break;
-    case I2C_SLAVE_FINISH: // master has signalled Stop / Restart
-        context.mem_address_written = false;
-        break;
-    default:
-        break;
+    }
+
+    // Check to see if the I2C controller is requesting data from the RAM
+    if (status & I2C_IC_INTR_STAT_R_RD_REQ_BITS) {
+
+        // Write the data from the current address in RAM
+        i2c1->hw->data_cmd = (uint32_t)ram[ram_addr];
+
+        // Clear the interrupt
+        i2c1->hw->clr_rd_req;
+
+        // Increment the address
+        ram_addr++;
     }
 }
 
-static void setup_slave() {
-    gpio_init(I2C_SLAVE_SDA_PIN);
-    gpio_set_function(I2C_SLAVE_SDA_PIN, GPIO_FUNC_I2C);
-    gpio_pull_up(I2C_SLAVE_SDA_PIN);
 
-    gpio_init(I2C_SLAVE_SCL_PIN);
-    gpio_set_function(I2C_SLAVE_SCL_PIN, GPIO_FUNC_I2C);
-    gpio_pull_up(I2C_SLAVE_SCL_PIN);
-
-    i2c_init(i2c0, I2C_BAUDRATE);
-    // configure I2C0 for slave mode
-    i2c_slave_init(i2c0, I2C_SLAVE_ADDRESS, &i2c_slave_handler);
-}
-
-static void run_slave() {
- uint64_t waitTime;
- while(true) {
-    for(uint8_t x = 0;x < 256;x++) {
-      waitTime = time_us_64() + 250000; // 4 times per second
-      context.mem[0] = x;
-      //printf("slave is waiting.\n");
-      while (time_us_64() < waitTime) {}
-    }
-  }
-}
-
+// Main loop - initilises system and then loops while interrupts get on with processing the data
 int main() {
-    stdio_init_all();
+    // add some accelerometer values 
+    for (int i = 59; i < 65; i++) {
+        if (i%2 == 0) {
+            ram[i] = ACC_VALUE;
+        }
+    }
 
-    // setup i2c slave
-    setup_slave();
-    run_slave();
+    // add some gyro values 
+    for (int i = 67; i < 73; i++) {
+        if (i%2 == 0) {
+            ram[i] = GYRO_VALUE;
+        }
+    }
 
+    // Setup I2C0 as slave (peripheral)
+    i2c_init(i2c1, 400 * 1000);
+    i2c_set_slave_mode(i2c1, true, ADDR);
+
+    // Setup GPIO pins to use and add pull up resistors
+    gpio_set_function(PICO_DEFAULT_I2C_SDA_PIN, GPIO_FUNC_I2C);
+    gpio_set_function(PICO_DEFAULT_I2C_SCL_PIN, GPIO_FUNC_I2C);
+    gpio_pull_up(PICO_DEFAULT_I2C_SDA_PIN);
+    gpio_pull_up(PICO_DEFAULT_I2C_SCL_PIN);
+
+    // Enable the I2C interrupts we want to process
+    i2c1->hw->intr_mask = (I2C_IC_INTR_MASK_M_RD_REQ_BITS | I2C_IC_INTR_MASK_M_RX_FULL_BITS);
+
+    // Set up the interrupt handler to service I2C interrupts
+    irq_set_exclusive_handler(I2C1_IRQ, i2c0_irq_handler);
+
+    // Enable I2C interrupt
+    irq_set_enabled(I2C1_IRQ, true);
+
+    // Do nothing in main loop
+    while (true) {
+        tight_loop_contents();
+        sleep_ms(500);
+    }
+    return 0;
 }
