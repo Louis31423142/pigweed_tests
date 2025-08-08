@@ -1,0 +1,22 @@
+[
+    "RESULTS:",
+    "Test /home/louis/pico/pico-sdk/build/_deps/picotool/enc_bootloader.elf failed.",
+    "Test /home/louis/pico/pico-sdk/build/_deps/picotool/enc_bootloader_mbedtls.elf failed.",
+    "Test /home/louis/pico/pico-sdk/build/test/pico_float_test/custom_double_funcs_test_compiler.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/pico_float_test/custom_float_funcs_test_pico_vfp.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/pico_float_test/pico_float_test.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/pico_float_test/custom_float_funcs_test_compiler.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/pico_float_test/custom_double_funcs_test_pico.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/pico_float_test/pico_double_test.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/pico_float_test/custom_float_funcs_test_pico_dcp.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/pico_float_test/m33.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/pico_float_test/custom_float_funcs_test_pico.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/kitchen_sink/kitchen_sink_extra_stdio.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/kitchen_sink/kitchen_sink_printf_none.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/kitchen_sink/kitchen_sink_no_flash.elf failed.",
+    "Test /home/louis/pico/pico-sdk/build/test/kitchen_sink/kitchen_sink_printf_compiler_no_shortcircuit.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/kitchen_sink/kitchen_sink_copy_to_ram.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/kitchen_sink/kitchen_sink.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/kitchen_sink/kitchen_sink_cpp.elf succeeded",
+    "Test /home/louis/pico/pico-sdk/build/test/kitchen_sink/kitchen_sink_printf_compiler.elf succeeded"
+]

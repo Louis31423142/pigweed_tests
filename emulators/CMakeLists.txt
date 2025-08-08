@@ -11,5 +11,4 @@ pico_sdk_init()
 
 # Add the i2c emulator
 add_subdirectory(i2c_slave)
-add_subdirectory(mpu6050_reader)
-add_subdirectory(i2c_master)
+add_subdirectory(spi_emulator)
