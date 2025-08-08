@@ -95,14 +95,20 @@ def main():
 
         if check_for_string(captured_msgs, element):
             print("TEST SUCCESFUL")
-            write_json(f"Test {element["dut_file"]} succeeded", "results.json")
+            write_json(f"Test {element['dut_file']} succeeded", "results.json")
         else:
             print("TEST FAILED")
-            write_json(f"Test {element["dut_file"]} failed.", "results.json")
+            write_json(f"Test {element['dut_file']} failed.", "results.json")
 
         # Empty list for next test
         captured_msgs = []
         sleep(1)
+
+    # Join threads before finishing
+    thread.join()
+
+    print("Finished testing")
+
 
 # Function reads list and checks for specified success string
 # Returns true if success string in list, else false
@@ -194,6 +200,7 @@ def ReceiveThread():
         else:    
             sleep(0.1)
 
-threading.Thread(target=ReceiveThread).start()
+thread = threading.Thread(target=ReceiveThread)
+thread.start()
 
 main()
