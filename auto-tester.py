@@ -37,6 +37,8 @@ timeout = 3
 
 captured_msgs = []
 
+# For stopping the thread
+stop = threading.Event()
 # For each dictionary in test_data, load the appropriate elfs onto dut and buddy and check for success strings
 def main():
     global captured_msgs
@@ -105,6 +107,7 @@ def main():
         sleep(1)
 
     # Join threads before finishing
+    stop.set()
     thread.join()
 
     print("Finished testing")
@@ -190,7 +193,7 @@ buddy_port = serial.Serial(port = f"/dev/{args.buddy}", baudrate = 115200)
 
 def ReceiveThread():
     global captured_msgs
-    while True:
+    while not stop.is_set():
         if dut_port.inWaiting() > 0: # number of bytes in input buffer > 1
             dut_msg = dut_port.readline()
             captured_msgs.append(dut_msg)
