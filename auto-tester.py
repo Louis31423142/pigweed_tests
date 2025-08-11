@@ -28,8 +28,6 @@ print(f"DUT port selected: {args.dut}\nBuddy port selected: {args.buddy}\nTest f
 timeout = 3
 
 captured_msgs = []
-dut_target_set = True
-failed_status = False
 
 # For stopping the thread
 stop = threading.Event()
@@ -37,6 +35,9 @@ stop = threading.Event()
 # For each dictionary in test_data, load the appropriate elfs onto dut and buddy and check for success strings
 def main():
     global captured_msgs
+
+    dut_target_set = True
+    failed_status = False
 
     # Initialise results json
     with open("results.json", "w") as file:
