@@ -1,0 +1,14 @@
+[
+    {
+        "dut_file": "/path/to/dut/file1.elf",
+        "buddy_file": "/path/to/buddy/file1.elf",
+        "success_string": "Example success string 1",
+        "test_name": "Example test name 1"
+    },
+    {
+        "dut_file": "/path/to/dut/file2.elf",
+        "buddy_file": "/path/to/buddy/file2.elf",
+        "success_string": "Example success string 2",
+        "test_name": "Example test name 2"
+    }
+]

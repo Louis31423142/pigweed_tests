@@ -11,4 +11,3 @@ pico_sdk_init()
 
 # Add the i2c emulator
 add_subdirectory(i2c_slave)
-add_subdirectory(spi_emulator)
