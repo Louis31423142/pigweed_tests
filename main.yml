@@ -29,6 +29,7 @@ jobs:
           python3 ~/pigweed_tests/auto-tester.py --dut ttyACM0 --buddy ttyACM1 --tests xxx/xxx.json
 
       - name: Upload results as artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: pigweed-test-results
