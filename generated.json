@@ -3,186 +3,186 @@
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_float_test/custom_double_funcs_test_compiler.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_float_test/custom_float_funcs_test_pico_vfp.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_float_test/pico_float_test.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_float_test/custom_float_funcs_test_compiler.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_float_test/custom_double_funcs_test_pico.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_float_test/pico_double_test.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_float_test/custom_float_funcs_test_pico_dcp.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_float_test/m33.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_float_test/custom_float_funcs_test_pico.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/kitchen_sink/kitchen_sink_extra_stdio.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/kitchen_sink/kitchen_sink_printf_none.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/kitchen_sink/kitchen_sink_no_flash.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/kitchen_sink/kitchen_sink_printf_compiler_no_shortcircuit.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/kitchen_sink/kitchen_sink_copy_to_ram.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/kitchen_sink/kitchen_sink.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/kitchen_sink/kitchen_sink_cpp.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/kitchen_sink/kitchen_sink_printf_compiler.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/hardware_pwm_test/hardware_pwm_test.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_sha256_test/pico_sha256_test.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_sem_test/pico_sem_test.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_time_test/pico_time_test.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_divider_test/pico_divider_nesting_test_with_disable_irq.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_divider_test/pico_divider_nesting_test_with_dirty_check.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_divider_test/pico_divider_test.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/cmsis_test/cmsis_test.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/hardware_irq_test/hardware_irq_test.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_stdlib_test/pico_stdlib_test.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_stdio_test/pico_stdio_test_rtt.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_stdio_test/pico_stdio_test_uart.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/pico_stdio_test/pico_stdio_test_usb.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     },
     {
         "dut_file": "/home/louis/runner_build/pico-sdk/build/test/hardware_sync_spin_lock_test/hardware_sync_spin_lock_test.elf",
         "buddy_file": "NULL",
         "success_string": "",
-        "test_name": "TEST"
+        "test_name": ""
     }
 ]

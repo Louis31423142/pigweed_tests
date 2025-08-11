@@ -17,25 +17,17 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('--dut', required=True)
 parser.add_argument('--buddy', required=True)
-
-# Required group so user has to submit either a root or a tests json
-group = parser.add_mutually_exclusive_group(required=True)
-group.add_argument('--root')
-group.add_argument('--tests')
+parser.add_argument('--tests', required=True)
 
 args = parser.parse_args()
 
-print(f"DUT port selected: {args.dut}\nBuddy port selected: {args.buddy}")
-
-if args.root != None:
-    print(f"Root path selected: {args.root}")
-else:
-    print(f"Tests file selected: {args.tests}")
+print(f"DUT port selected: {args.dut}\nBuddy port selected: {args.buddy}\nTest file selected: {args.tests}")
 
 # After flashing the DUT, wait this long before checking for success strings
 timeout = 3
 
 captured_msgs = []
+dut_target_set = True
 
 # For stopping the thread
 stop = threading.Event()
@@ -48,17 +40,10 @@ def main():
     with open("results.json", "w") as file:
         json.dump(["RESULTS:"], file, indent=4) 
 
-    # If the user passed a root directory to expand into files, create the json based on this
-    if args.root != None:
-        load_json(args.root)
-        with open("tests.json", "r") as file:
-            test_data = json.load(file)
-
-    # Otherwise, load test_files from specified json
-    else:
-        test_file_path = os.path.expanduser(f"~/runner_build/{args.tests}")
-        with open(test_file_path, "r") as file:
-            test_data = json.load(file) 
+    # Load test_files from specified json
+    test_file_path = os.path.expanduser(f"~/runner_build/{args.tests}")
+    with open(test_file_path, "r") as file:
+        test_data = json.load(file) 
     
     for test in test_data:
         test["dut_file"] = os.path.expanduser(test["dut_file"])
@@ -72,6 +57,7 @@ def main():
         # If there is a buddy file specified (e.g an i2c emulator), switch target and flash the elf
         if element["buddy_file"] != 'NULL':
             set_target('buddy')
+            dut_target_set = False
             result = subprocess.run(f'~/pico/openocd/src/openocd \
                                     -s ~/pico/openocd/tcl \
                                     -f interface/cmsis-dap.cfg \
@@ -82,9 +68,11 @@ def main():
                                     capture_output = True, text = True, shell = True)
 
             print('\n'.join(result.stderr.splitlines()[-5:]))
-
-        # Set target to dut
-        set_target('dut')
+    
+        # Set target to dut if not already dut
+        if dut_target_set == False:
+            set_target('dut')
+            dut_target_set = True
 
         # Flash elf onto DUT
         result = subprocess.run(f'~/pico/openocd/src/openocd \
@@ -138,52 +126,6 @@ def check_for_string(msg_list, element):
 def set_target(target):
     target_result = subprocess.run(["cargo", "run", "target", target], cwd = "/home/louis/testing/testctl", capture_output = True, text = True)
     print(target_result.stdout)
-
-# Function for loading json with all .elf files contained within some root directory
-# Creates tests.json
-def load_json(root):
-    # Expand root to full path
-    path = os.path.expanduser(f"{root}")
-
-    elf_path_list = []
-    dir_path_list = [path]
-
-    while True:
-        elf_changes = 0
-        dir_changes = 0
-        temp_list = []
-
-        # Try to get the contents from every directory in dir_list
-        for path in dir_path_list:
-            try:
-                expanded_list = os.listdir(path)
-                for item in expanded_list:
-                    temp_list.append(f"{path}/{item}")
-            except:
-                pass
-
-        # Split the paths contained in temp_list into either directories or .elfs 
-        for path in temp_list:
-            if os.path.isdir(path) and path not in dir_path_list:
-                dir_path_list.append(path)
-                dir_changes += 1
-            elif path.endswith(".elf") and path not in elf_path_list:
-                elf_path_list.append(path)
-                elf_changes += 1
-
-        # If we havent added to directories list or .elf list, must be done searching
-        if elf_changes == 0 and dir_changes == 0:
-            break
-
-    tests = []
-    for path in elf_path_list:
-        tests.append({"dut_file": path, "buddy_file": "NULL", "success_string": "", "test_name": "TEST"})
-
-    json_tests = json.dumps(tests, indent=4)
-
-    # Load files into json
-    with open("tests.json", "w") as file:
-        file.write(json_tests)
 
 # Function for adding results to json
 def write_json(new_data, filename):
