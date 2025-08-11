@@ -5,6 +5,7 @@ import serial
 import json
 from time import sleep
 import threading
+import sys
 
 # Set up argument parsing
 parser = argparse.ArgumentParser(
@@ -28,6 +29,7 @@ timeout = 3
 
 captured_msgs = []
 dut_target_set = True
+failed_status = False
 
 # For stopping the thread
 stop = threading.Event()
@@ -97,6 +99,7 @@ def main():
         else:
             print("TEST FAILED")
             write_json(f"Test {element['dut_file']} failed with output {captured_msgs}. Programming result: {open_ocd_result}", "results.json")
+            failed_status=True
 
         # Empty list for next test
         captured_msgs = []
@@ -106,7 +109,13 @@ def main():
     stop.set()
     thread.join()
 
-    print("Finished testing")
+    # Exit with 1 or 0 so github knows if workflow failed/passes
+    if failed_status == True:
+        print("One or more tests failed! See results.json for more info.")
+        sys.exit(1)
+    else:
+        print("All tests passes! See results.json for logges outputs.")
+        sys.exit(0)
 
 
 # Function reads list and checks for specified success string
