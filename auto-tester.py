@@ -45,7 +45,7 @@ def main():
     global captured_msgs
 
     # Initialise results json
-    with open(f"{args.tests}/../results.json", "w") as file:
+    with open("results.json", "w") as file:
         json.dump(["RESULTS:"], file, indent=4) 
 
     # If the user passed a root directory to expand into files, create the json based on this
@@ -56,8 +56,13 @@ def main():
 
     # Otherwise, load test_files from specified json
     else:
-       with open(args.tests, "r") as file:
+        test_file_path = os.path.expanduser(f"~/runner_build/{args.tests}")
+        with open(test_file_path, "r") as file:
             test_data = json.load(file) 
+    
+    for test in test_data:
+        test["dut_file"] = os.path.expanduser(test["dut_file"])
+        test["buddy_file"] = os.path.expanduser(test["buddy_file"])
     
     for element in test_data:
         # Announce test name
@@ -92,16 +97,18 @@ def main():
                                 capture_output = True, text = True, shell = True)
 
         print('\n'.join(result.stderr.splitlines()[-5:-1]))
+        open_ocd_result = ('\n'.join(result.stderr.splitlines()[-5:-1]))
 
         # Allow timeout seconds for test files to run before checking for success strings
         sleep(timeout)
+        print(captured_msgs)
 
         if check_for_string(captured_msgs, element):
             print("TEST SUCCESFUL")
-            write_json(f"Test {element['dut_file']} succeeded", "results.json")
+            write_json(f"Test {element['dut_file']} succeeded with output {captured_msgs}. Programming result: {open_ocd_result}", "results.json")
         else:
             print("TEST FAILED")
-            write_json(f"Test {element['dut_file']} failed.", "results.json")
+            write_json(f"Test {element['dut_file']} failed with output {captured_msgs}. Programming result: {open_ocd_result}", "results.json")
 
         # Empty list for next test
         captured_msgs = []
