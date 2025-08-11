@@ -7,6 +7,8 @@ This code is for automated testing using the pigweed rp2350 Target Board rev 2.
 Setup a raspberry pi as a self-hosted github runner attached to your desired repository. Add this repo to the pi. Add a folder runner_build, and clone the repo you want 
 to test here.
 
+Add the 2 board files to your clone of pico-sdk/src/boards/include
+
 Add main.yml to your repository workflows making sure to change xxx/xxx.json. The test file xxx.json should be added to your repo, and a template can be generated using test_list_helper.py. 
 
 To use test_list_helper pass a single argument --root which is the location of your build folder on the pi. You will have to build the repo once, and test_list_helper
