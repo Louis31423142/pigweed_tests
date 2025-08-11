@@ -39,12 +39,13 @@ captured_msgs = []
 
 # For stopping the thread
 stop = threading.Event()
+
 # For each dictionary in test_data, load the appropriate elfs onto dut and buddy and check for success strings
 def main():
     global captured_msgs
 
     # Initialise results json
-    with open("results.json", "w") as file:
+    with open(f"{args.tests}/../results.json", "w") as file:
         json.dump(["RESULTS:"], file, indent=4) 
 
     # If the user passed a root directory to expand into files, create the json based on this
