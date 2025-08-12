@@ -58,7 +58,7 @@ def main():
         print(element["dut_file"])
 
         # If there is a buddy file specified (e.g an i2c emulator), switch target and flash the elf
-        if element["buddy_file"] != 'NULL':
+        if element["buddy_file"] != "NONE":
             set_target('buddy')
             dut_target_set = False
             result = subprocess.run(f'~/pico/openocd/src/openocd \
