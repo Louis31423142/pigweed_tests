@@ -24,8 +24,8 @@ args = parser.parse_args()
 
 print(f"DUT port selected: {args.dut}\nBuddy port selected: {args.buddy}\nTest file selected: {args.tests}")
 
-# After flashing the DUT, wait this long before checking for success strings
-timeout = 3
+# After flashing the DUT, wait this long before checking for success strings as default if not specified in test json
+default_timeout = 3
 
 captured_msgs = []
 
@@ -91,7 +91,11 @@ def main():
         open_ocd_result = ('\n'.join(result.stderr.splitlines()[-5:-1]))
 
         # Allow timeout seconds for test files to run before checking for success strings
-        sleep(timeout)
+        if element["timeout"] == "default":
+            sleep(default_timeout)
+        else:
+            sleep(element["timeout"])
+        
         print(captured_msgs)
 
         if check_for_string(captured_msgs, element):
@@ -122,14 +126,13 @@ def main():
 # Function reads list and checks for specified success string
 # Returns true if success string in list, else false
 def check_for_string(msg_list, element):
-    #Some tests dont have any prints so just return true
-    if len(msg_list) == 0 and element["success_string"] == 'None':
-        return True
-    
     for item in msg_list:
-        if bytes(element['success_string'], 'utf-8') in item:
-            print(f"Found success string {element['success_string']} in msg_list")
+        if item == bytes(element["failure_string"], 'utf-8'):
+            return False
+        elif item == bytes(element['success_string'], 'utf-8'):
             return True
+    
+    # If we didn't find success or failure string, assume failure
     return False 
 
 # Function for setting target device (either dut or buddy)

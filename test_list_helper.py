@@ -1,7 +1,5 @@
-import subprocess
 import os
 import argparse
-import serial
 import json
 
 # Set up argument parsing
@@ -59,7 +57,7 @@ def load_json(root):
 
     tests = []
     for path in elf_path_list:
-        tests.append({"dut_file": path, "buddy_file": "NULL", "success_string": "", "test_name": ""})
+        tests.append({"dut_file": path, "buddy_file": "NONE", "success_string": "SUCCESS STRING", "test_name": "TEST","failure_string": "FAILURE_STRING", "timeout": "default"})
 
     json_tests = json.dumps(tests, indent=4)
 
