@@ -94,7 +94,7 @@ def main():
         if element["timeout"] == "default":
             sleep(default_timeout)
         else:
-            sleep(element["timeout"])
+            sleep(float(element["timeout"]))
         
         print(captured_msgs)
 
