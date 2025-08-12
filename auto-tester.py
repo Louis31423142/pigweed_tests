@@ -44,7 +44,7 @@ def main():
         json.dump(["RESULTS:"], file, indent=4) 
 
     # Load test_files from specified json
-    test_file_path = os.path.expanduser(f"~/runner_build/{args.tests}")
+    test_file_path = os.path.expanduser({args.tests})
     with open(test_file_path, "r") as file:
         test_data = json.load(file) 
     
