@@ -66,7 +66,7 @@ def main():
                                     -f interface/cmsis-dap.cfg \
                                     -f target/rp2350.cfg \
                                     -c "adapter speed 5000; \
-                                    program /home/louis/auto-tests/emulators/build/{element["buddy_file"]} \
+                                    program {element["buddy_file"]} \
                                     verify reset exit"', \
                                     capture_output = True, text = True, shell = True)
 

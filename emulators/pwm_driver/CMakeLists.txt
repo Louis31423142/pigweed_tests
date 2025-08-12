@@ -1,16 +1,16 @@
 # Add executable
-add_executable(i2c_slave
-        i2c_slave.c
+add_executable(pwm_driver
+        pwm_driver.c
         )
 
 # pull in common dependencies and additional i2c hardware support
-target_link_libraries(i2c_slave pico_i2c_slave
+target_link_libraries(pwm_driver pico_pwm_driver
     hardware_i2c
     pico_stdlib
     )
 
 # create map/bin/hex file etc.
-pico_add_extra_outputs(i2c_slave)
+pico_add_extra_outputs(pwm_driver)
 
 
 
