@@ -119,7 +119,7 @@ def main():
         print("One or more tests failed! See results.json for more info.")
         sys.exit(1)
     else:
-        print("All tests passes! See results.json for logges outputs.")
+        print("All tests passes! See results.json for logged outputs.")
         sys.exit(0)
 
 
