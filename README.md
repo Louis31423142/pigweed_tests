@@ -4,8 +4,7 @@ This code is for automated testing using the pigweed rp2350 Target Board rev 2.
 
 ## Setup
 
-Setup a raspberry pi as a self-hosted github runner attached to your desired repository. Add this repo to the pi. Add a folder runner_build, and clone the repo you want 
-to test here.
+Setup a raspberry pi as a self-hosted github runner attached to your desired repository. If you want multiple repos, just add actions-runner2 and have both runners running in seperate terminals.
 
 Add the 2 board files to your clone of pico-sdk/src/boards/include
 
