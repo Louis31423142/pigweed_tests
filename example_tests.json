@@ -4,11 +4,15 @@
         "buddy_file": "/path/to/buddy/file1.elf",
         "success_string": "Example success string 1",
         "test_name": "Example test name 1"
+        "failure_string": "Example failure string 1",
+        "timeout": "default"
     },
     {
         "dut_file": "/path/to/dut/file2.elf",
         "buddy_file": "/path/to/buddy/file2.elf",
         "success_string": "Example success string 2",
         "test_name": "Example test name 2"
+        "failure_string": "Example failure string 2",
+        "timeout": "default"
     }
 ]
