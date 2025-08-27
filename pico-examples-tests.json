@@ -1,7 +1,7 @@
 [
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/i2c/mpu6050_i2c/mpu6050_i2c.elf",
-        "buddy_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/pigweed_tests/emulators/buddy_build/i2c_slave/i2c_slave.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/i2c/mpu6050_i2c/mpu6050_i2c.elf",
+        "buddy_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pigweed_tests/emulators/buddy_build/i2c_slave/i2c_slave.elf",
         "success_string": "Hello, divider!\r\n",
         "test_name": "TEST",
         "failure_string": "FAILURE_STRING",
