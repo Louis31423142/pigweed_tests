@@ -1,6 +1,14 @@
 [
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/divider/hello_divider.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/i2c/mpu6050_i2c/mpu6050_i2c.elf",
+        "buddy_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/pigweed_tests/emulators/buddy_build/i2c_slave/i2c_slave.elf",
+        "success_string": "Hello, divider!\r\n",
+        "test_name": "TEST",
+        "failure_string": "FAILURE_STRING",
+        "timeout": "default"
+    },
+    {
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/divider/hello_divider.elf",
         "buddy_file": "NONE",
         "success_string": "Hello, divider!\r\n",
         "test_name": "TEST",
@@ -8,7 +16,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/i2c/ht16k33_i2c/ht16k33_i2c.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/i2c/ht16k33_i2c/ht16k33_i2c.elf",
         "buddy_file": "NONE",
         "success_string": "Welcome to HT33k16!\r\n",
         "test_name": "TEST",
@@ -16,7 +24,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/i2c/ssd1306_i2c/ssd1306_i2c.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/i2c/ssd1306_i2c/ssd1306_i2c.elf",
         "buddy_file": "NONE",
         "success_string": "Hello, SSD1306 OLED display! Look at my raspberries..\r\n",
         "test_name": "TEST",
@@ -24,7 +32,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/i2c/bus_scan/i2c_bus_scan.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/i2c/bus_scan/i2c_bus_scan.elf",
         "buddy_file": "NONE",
         "success_string": "Done.\r\n",
         "test_name": "TEST",
@@ -32,7 +40,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/otp/hello_otp/hello_otp.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/otp/hello_otp/hello_otp.elf",
         "buddy_file": "NONE",
         "success_string": "Raw overwrite of ECC data succeeded\r\n",
         "test_name": "TEST",
@@ -40,7 +48,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/flash/runtime_flash_permissions/runtime_flash_permissions.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/flash/runtime_flash_permissions/runtime_flash_permissions.elf",
         "buddy_file": "NONE",
         "success_string": "Not permitted, as expected\r\n",
         "test_name": "TEST",
@@ -48,7 +56,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/watchdog/hello_watchdog/hello_watchdog.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/watchdog/hello_watchdog/hello_watchdog.elf",
         "buddy_file": "NONE",
         "success_string": "Rebooted by Watchdog!\r\n",
         "test_name": "TEST",
@@ -56,7 +64,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/dma/control_blocks/dma_control_blocks.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/dma/control_blocks/dma_control_blocks.elf",
         "buddy_file": "NONE",
         "success_string": "DMA finished.\r\n",
         "test_name": "TEST",
@@ -64,7 +72,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/dma/hello_dma/hello_dma.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/dma/hello_dma/hello_dma.elf",
         "buddy_file": "NONE",
         "success_string": "Hello, world! (from DMA)\r\n",
         "test_name": "TEST",
@@ -72,7 +80,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/dma/sniff_crc/sniff_crc.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/dma/sniff_crc/sniff_crc.elf",
         "buddy_file": "NONE",
         "success_string": "CRC32 check is good\r\n",
         "test_name": "TEST",
@@ -80,7 +88,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/sha/sha256/hello_sha256.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/sha/sha256/hello_sha256.elf",
         "buddy_file": "NONE",
         "success_string": "Success\r\n",
         "test_name": "TEST",
@@ -88,7 +96,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/sha/mbedtls_sha256/mbedtls_sha256.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/sha/mbedtls_sha256/mbedtls_sha256.elf",
         "buddy_file": "NONE",
         "success_string": "Test passed\r\n",
         "test_name": "TEST",
@@ -96,7 +104,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/reset/hello_reset/hello_reset.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/reset/hello_reset/hello_reset.elf",
         "buddy_file": "NONE",
         "success_string": "Hello, reset!\r\n",
         "test_name": "TEST",
@@ -104,7 +112,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/timer/hello_timer/hello_timer.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/timer/hello_timer/hello_timer.elf",
         "buddy_file": "NONE",
         "success_string": "Hello Timer!\r\n",
         "test_name": "TEST",
@@ -112,7 +120,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/timer/timer_lowlevel/timer_lowlevel.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/timer/timer_lowlevel/timer_lowlevel.elf",
         "buddy_file": "NONE",
         "success_string": "Alarm IRQ fired\r\n",
         "test_name": "TEST",
@@ -120,7 +128,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/hello_world/serial/hello_serial.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/hello_world/serial/hello_serial.elf",
         "buddy_file": "NONE",
         "success_string": "'Hello, world!\r\n",
         "test_name": "TEST",
@@ -128,7 +136,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/hello_world/usb/hello_usb.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/hello_world/usb/hello_usb.elf",
         "buddy_file": "NONE",
         "success_string": "Hello, world!\r\n",
         "test_name": "TEST",
@@ -136,7 +144,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/clocks/hello_resus/hello_resus.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/clocks/hello_resus/hello_resus.elf",
         "buddy_file": "NONE",
         "success_string": "Hello resus\r\n",
         "test_name": "TEST",
@@ -144,7 +152,7 @@
         "timeout": "default"
     },
     {
-        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/pico-examples-pigweed/build/pio/uart_dma/pio_uart_dma.elf",
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-examples-pigweed/build/pio/uart_dma/pio_uart_dma.elf",
         "buddy_file": "NONE",
         "success_string": "dma_tx done\r\n",
         "test_name": "TEST",
