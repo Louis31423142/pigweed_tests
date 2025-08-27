@@ -1,0 +1,82 @@
+[
+    {
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-sdk-pigweed/build/test/pico_float_test/custom_double_funcs_test_compiler.elf",
+        "buddy_file": "NONE",
+        "success_string": "PASSED\r\n",
+        "test_name": "custom_double_funcs_test_compiler",
+        "failure_string": "FAILURE_STRING",
+        "timeout": "default"
+    },
+    {
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-sdk-pigweed/build/test/pico_float_test/custom_float_funcs_test_pico_vfp.elf",
+        "buddy_file": "NONE",
+        "success_string": "PASSED\r\n",
+        "test_name": "custom_float_funcs_test_pico_vfp",
+        "failure_string": "FAILURE_STRING",
+        "timeout": "default"
+    },
+    {
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-sdk-pigweed/build/test/pico_float_test/pico_float_test.elf",
+        "buddy_file": "NONE",
+        "success_string": "PASSED\r\n",
+        "test_name": "pico_float_test",
+        "failure_string": "FAILURE_STRING",
+        "timeout": "default"
+    },
+    {
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-sdk-pigweed/build/test/pico_float_test/custom_float_funcs_test_compiler.elf",
+        "buddy_file": "NONE",
+        "success_string": "PASSED\r\n",
+        "test_name": "custom_float_funcs_test_compiler",
+        "failure_string": "FAILURE_STRING",
+        "timeout": "default"
+    },
+    {
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-sdk-pigweed/build/test/pico_float_test/custom_double_funcs_test_pico.elf",
+        "buddy_file": "NONE",
+        "success_string": "PASSED\r\n",
+        "test_name": "custom_double_funcs_test_pico",
+        "failure_string": "FAILURE_STRING",
+        "timeout": "default"
+    },
+    {
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-sdk-pigweed/build/test/pico_float_test/pico_double_test.elf",
+        "buddy_file": "NONE",
+        "success_string": "PASSED\r\n",
+        "test_name": "pico_double_test",
+        "failure_string": "FAILURE_STRING",
+        "timeout": "default"
+    },
+    {
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-sdk-pigweed/build/test/pico_float_test/custom_float_funcs_test_pico_dcp.elf",
+        "buddy_file": "NONE",
+        "success_string": "PASSED\r\n",
+        "test_name": "custom_float_funcs_test_pico_dcp",
+        "failure_string": "FAILURE_STRING",
+        "timeout": "default"
+    },
+    {
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-sdk-pigweed/build/test/pico_float_test/m33.elf",
+        "buddy_file": "NONE",
+        "success_string": "Pass\r\n",
+        "test_name": "m33",
+        "failure_string": "FAILURE_STRING",
+        "timeout": "default"
+    },
+    {
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-sdk-pigweed/build/test/pico_float_test/custom_float_funcs_test_pico.elf",
+        "buddy_file": "NONE",
+        "success_string": "PASSED\r\n",
+        "test_name": "custom_float_funcs_test_pico",
+        "failure_string": "FAILURE_STRING",
+        "timeout": "default"
+    },
+    {
+        "dut_file": "/home/louis/builds/oeMgGL__5/0/louis.wood/pico-sdk-pigweed/build/test/pico_sha256_test/pico_sha256_test.elf",
+        "buddy_file": "NONE",
+        "success_string": "Test passed\r\n",
+        "test_name": "pico_sha256_test",
+        "failure_string": "FAILURE_STRING",
+        "timeout": "default"
+    }
+]
