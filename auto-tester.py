@@ -64,8 +64,8 @@ def main():
         if element["buddy_file"] != "NONE":
             set_target('buddy')
             dut_target_set = False
-            result = subprocess.run(f'~/pico/openocd/src/openocd \
-                                    -s ~/pico/openocd/tcl \
+            result = subprocess.run(f'/home/louis/pico/openocd/src/openocd \
+                                    -s /home/louis/pico/openocd/tcl \
                                     -f interface/cmsis-dap.cfg \
                                     -f target/rp2350.cfg \
                                     -c "adapter speed 5000; \
@@ -81,8 +81,8 @@ def main():
             dut_target_set = True
 
         # Flash elf onto DUT
-        result = subprocess.run(f'~/pico/openocd/src/openocd \
-                                -s ~/pico/openocd/tcl \
+        result = subprocess.run(f'/home/louis/pico/openocd/src/openocd \
+                                -s /home/louis/pico/openocd/tcl \
                                 -f interface/cmsis-dap.cfg \
                                 -f target/rp2350.cfg \
                                 -c "adapter speed 5000; \
