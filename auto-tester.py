@@ -34,7 +34,7 @@ stop = threading.Event()
 
 # For each dictionary in test_data, load the appropriate elfs onto dut and buddy and check for success strings
 def main():
-    global captured_msgs
+    global captured_msgs 
 
     dut_target_set = True
     failed_status = False
@@ -55,8 +55,11 @@ def main():
     for element in test_data:
         # Announce test name
         print('-----', element["test_name"], '-----')
-        print(element["dut_file"])
 
+        # Empty list for next test
+        captured_msgs = []
+
+        print(element["dut_file"])
         # If there is a buddy file specified (e.g an i2c emulator), switch target and flash the elf
         if element["buddy_file"] != "NONE":
             set_target('buddy')
@@ -89,7 +92,6 @@ def main():
 
         print('\n'.join(result.stderr.splitlines()[-5:-1]))
         open_ocd_result = ('\n'.join(result.stderr.splitlines()[-5:-1]))
-
         # Allow timeout seconds for test files to run before checking for success strings
         if element["timeout"] == "default":
             sleep(default_timeout)
@@ -105,10 +107,6 @@ def main():
             print("TEST FAILED")
             write_json(f"Test {element['dut_file']} failed with output {captured_msgs}. Programming result: {open_ocd_result}", "results.json")
             failed_status=True
-
-        # Empty list for next test
-        captured_msgs = []
-        sleep(1)
 
     # Join threads before finishing
     stop.set()
