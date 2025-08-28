@@ -92,6 +92,7 @@ def main():
 
         print('\n'.join(result.stderr.splitlines()[-5:-1]))
         open_ocd_result = ('\n'.join(result.stderr.splitlines()[-5:-1]))
+
         # Allow timeout seconds for test files to run before checking for success strings
         if element["timeout"] == "default":
             sleep(default_timeout)
@@ -117,7 +118,7 @@ def main():
         print("One or more tests failed! See results.json for more info.")
         sys.exit(1)
     else:
-        print("All tests passes! See results.json for logged outputs.")
+        print("All tests passed! See results.json for logged outputs.")
         sys.exit(0)
 
 
@@ -135,7 +136,7 @@ def check_for_string(msg_list, element):
 
 # Function for setting target device (either dut or buddy)
 def set_target(target):
-    target_result = subprocess.run(["cargo", "run", "target", target], cwd = "/home/louis/testing/testctl", capture_output = True, text = True)
+    target_result = subprocess.run(["/home/louis/.cargo/bin/cargo", "run", "target", target], cwd = "/home/louis/testing/testctl", capture_output = True, text = True)
     print(target_result.stdout)
 
 # Function for adding results to json
